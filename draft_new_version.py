@@ -1,6 +1,6 @@
 from music21.serial import ToneRow, pcToToneRow
 from music21 import corpus, converter, metadata, analysis, meter, key, stream, instrument, note, pitch
-
+import sys
 
 class Grader:
     def __init__(self, link):
@@ -134,5 +134,5 @@ class Grader:
         
         
 if __name__ == "__main__":
-    path = Grader(input())
+    path = Grader(sys.argv[1])
     path.run()
