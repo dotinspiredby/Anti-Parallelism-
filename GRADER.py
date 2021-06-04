@@ -2,6 +2,7 @@ from music21.serial import ToneRow, pcToToneRow
 from music21 import corpus, converter, metadata, analysis, meter, key, stream, instrument, note, pitch
 import sys
 
+
 class Grader:
     def __init__(self, link):
         self.link = link
@@ -39,13 +40,10 @@ class Grader:
                         if direction == "down" and "-" not in n.editorial.harmonicInterval.directedName:
                             if n.editorial.harmonicInterval.directedName != "P1":
                                 print("voice crossing {0} in measure {1}".format(voice_names,
-                                                                                 voice_a.elements[
-                                                                                     measure_index].notes.index(n)))
+                                                                                 measure_index+1))
                         elif direction == "up" and "-" in n.editorial.harmonicInterval.directedName:
                             print("voice crossing {0} in measure {1}".format(voice_names,
-                                                                             voice_a.elements[
-                                                                                 measure_index].notes.index(
-                                                                                 n)))
+                                                                             measure_index+1))
 
                         if "-" in n.editorial.harmonicInterval.directedName:
                             measure_intervals.append(n.editorial.harmonicInterval.directedName.replace("-", ""))
