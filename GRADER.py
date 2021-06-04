@@ -8,7 +8,6 @@ class Grader:
 
     def run(self):
         test = converter.parse(self.link)
-        
         test_score = test.voicesToParts()
         soprano, alto, tenor, bass = self.__partify(test_score)
 
@@ -18,7 +17,6 @@ class Grader:
         self.__intervalize(tenor, alto, 'alto/tenor')
         self.__intervalize(bass, alto, ' alto/bass')
         self.__intervalize(bass, tenor, 'tenor/bass')
-        test.show()
 
     @staticmethod
     def __partify(score):
@@ -73,11 +71,13 @@ class Grader:
                                 list_a.insert(n, list_b[i])
                                 len1 += 1
                         except ValueError:
-                            i_for_b = list_a.index(list_b[n])
-                            for i in range(i_for_b - 1, n - 1, -1):
-                                list_b.insert(n, list_a[i])
-                                len2 += 1
-                        n += 1
+                            try:
+                                i_for_b = list_a.index(list_b[n])
+                                for i in range(i_for_b - 1, n - 1, -1):
+                                    list_b.insert(n, list_a[i])
+                                    len2 += 1
+                            except ValueError:
+                                list_b.append(list_a[n])
                 except IndexError:
                     return max(list_a, list_b)
 
@@ -114,8 +114,8 @@ class Grader:
         beats = []
         beat_num = 0
         for cell in range(len(intrvls_up_down)):  # вписать контекст
-            measure = fill(min(intrvls_down_up[cell], intrvls_up_down[cell]),
-                           max(intrvls_down_up[cell], intrvls_up_down[cell]))
+            measure = fill(min(intrvls_down_up[cell], intrvls_up_down[cell], key=lambda x: len(x)),
+                           max(intrvls_down_up[cell], intrvls_up_down[cell], key=lambda x: len(x)))
             beat_num += len(measure)
             interval_list.append(measure)
             beats.append(beat_num)
@@ -131,7 +131,7 @@ class Grader:
 
         check(interval_line, voice_names, 1, beats)
         check(interval_line, voice_names, 2, beats, 'hidden ')
-        
+
         
 if __name__ == "__main__":
     path = Grader(sys.argv[1])
