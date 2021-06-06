@@ -1,5 +1,4 @@
-from music21.serial import ToneRow, pcToToneRow
-from music21 import corpus, converter, metadata, analysis, meter, key, stream, instrument, note, pitch
+from music21 import converter
 import sys
 
 
